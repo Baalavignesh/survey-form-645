@@ -5,18 +5,9 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'  
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig' 
         DOCKER_REPO = 'baalavignesh21/baalavignesh-survey'
-        PATH = "/Users/baalavignesh21/Downloads/google-cloud-sdk/bin:$PATH"
     }
 
     stages {
-        stage('Check Docker Path') {
-            steps {
-                sh 'echo $PATH'
-                sh 'which docker'
-                sh 'docker --version'
-            }
-        }
-
 
         stage('Clone Repo') {
             steps {
