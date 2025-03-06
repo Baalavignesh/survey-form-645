@@ -16,7 +16,6 @@ pipeline {
             }
         }
 
-
         stage('Clone Repo') {
             steps {
                 script {
@@ -37,8 +36,11 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh '/usr/local/bin/docker login -u baalavignesh21 -p $DOCKER_PASSWORD https://index.docker.io/v1/'
-                    sh '/usr/local/bin/docker push baalavignesh21/baalavignesh-survey:18'
+                    // Login to Docker Hub using Jenkins credentials
+                    docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
+                        // Push the newly created Docker image
+                        docker.image("${DOCKER_REPO}:${env.BUILD_ID}").push()
+                    }
                 }
             }
         }
