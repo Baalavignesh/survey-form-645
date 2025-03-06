@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Baalavignesh Survey Form</title>
+        <link rel="stylesheet" href="survey.css" />
+    </head>
+    <body>
+        <form class="container" id="surveyForm">
+            <h1 class="heading">Student Survey Form</h1>
+
+            <div class="input-field">
+                <label class="text-label" for="firstName">First Name:</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="lastName">Last Name:</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="streetAddress">Street Address:</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="streetAddress"
+                    name="streetAddress"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="city">City:</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="city"
+                    name="city"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="state">State:</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="state"
+                    name="state"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="zip">Zip:</label>
+                <input
+                    class="text-input"
+                    type="number"
+                    id="zip"
+                    name="zip"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="telephone">Telephone Number:</label>
+                <input
+                    class="text-input"
+                    type="number"
+                    id="telephone"
+                    name="telephone"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="email">E-mail:</label>
+                <input
+                    class="text-input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="surveyDate">Date of Survey:</label>
+                <input
+                    class="text-input"
+                    type="date"
+                    id="surveyDate"
+                    name="surveyDate"
+                    required
+                /><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="recommendation">How likely are you to recommend this school?</label>
+                <select class="text-input" id="recommendation" name="recommendation" required>
+                    <option value="">Please select...</option>
+                    <option value="very-likely">Very Likely</option>
+                    <option value="likely">Likely</option>
+                    <option value="unlikely">Unlikely</option>
+                </select><br /><br />
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="raffle">Raffle Numbers (Enter at least 10 comma-separated numbers between 1-100):</label>
+                <input
+                    class="text-input"
+                    type="text"
+                    id="raffle"
+                    name="raffle"
+                    pattern="^(\s*\d{1,3}\s*,\s*){9,}\d{1,3}\s*$"
+                    title="Please enter at least 10 comma-separated numbers between 1 and 100"
+                    required
+                /><br /><br />
+            </div>
+
+            <h3>What did you like most about the campus?</h3>
+            <div class="checkbox-field">
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="students" />
+                    <label>Students</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="location" />
+                    <label>Location</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="campus" />
+                    <label>Campus</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="atmosphere" />
+                    <label>Atmosphere</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="dorm rooms" />
+                    <label>Dorm Rooms</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" name="like" value="sports" />
+                    <label>Sports</label>
+                </div>
+            </div>
+
+            <h3>How did you become interested in the university?</h3>
+            <div class="input-field">
+                <div class="radio-input">
+                    <label
+                        ><input type="radio" name="interest" value="friends" />
+                        Friends</label
+                    >
+                </div>
+                <div class="radio-input">
+                    <label
+                        ><input type="radio" name="interest" value="television" />
+                        Television</label
+                    >
+                </div>
+                <div class="radio-input">
+                    <label
+                        ><input type="radio" name="interest" value="internet" />
+                        Internet</label
+                    >
+                </div>
+                <div class="radio-input">
+                    <label
+                        ><input type="radio" name="interest" value="other" /> Other</label
+                    >
+                </div>
+            </div>
+
+            <div class="input-field">
+                <label class="text-label" for="comments">Additional Comments:</label>
+                <textarea
+                    class="text-input"
+                    id="comments"
+                    name="comments"
+                    rows="4"
+                ></textarea><br /><br />
+            </div>
+
+            <div class="button-group">
+                <input type="submit" value="Submit" class="submit-button" />
+            </div>
+        </form>
+
+    </body>
+</html>
