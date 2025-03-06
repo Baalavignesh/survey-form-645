@@ -51,7 +51,7 @@ pipeline {
                 script {
                     // Set up kubectl config using the kubeconfig secret
                     withCredentials([file(credentialsId: KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f deployment.yaml'  // Update your deployment 
+                        sh 'kubectl apply -f deployment-definition.yaml'  // Update your deployment 
                         sh 'kubectl rollout restart deployment/survey-deployment'  // Restart the deployment 
                     }
                 }
