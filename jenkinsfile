@@ -9,6 +9,12 @@ pipeline {
 
     stages {
 
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+        
         stage('Clone Repo') {
             steps {
                 script {
