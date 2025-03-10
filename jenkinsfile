@@ -36,6 +36,15 @@ pipeline {
             }
         }
 
+        stage('Get GKE Credentials') {
+            steps {
+                script {
+                    // Get credentials for the GKE cluster
+                    sh "gcloud container clusters get-credentials my-first-cluster-3 --zone us-east1-b --project endless-anagram-453318-q6"
+                }
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
