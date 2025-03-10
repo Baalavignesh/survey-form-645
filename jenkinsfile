@@ -37,18 +37,14 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             withCredentials([file(credentialsId: KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
-        //                 sh 'export PATH=/Users/baalavignesh21/Downloads/google-cloud-sdk/bin:$PATH'
-        //                 sh 'export USE_GKE_GCLOUD_AUTH_PLUGIN=True'
-        //                 sh "kubectl apply -f deployment-definition.yaml"
-        //                 sh "kubectl rollout restart deployment/survey-deployment"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh "kubectl apply -f deployment-definition.yaml"
+                    sh "kubectl rollout restart deployment/survey-deployment"
+                }
+            }
+        }
     }
 
     post {
