@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'  
+        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig'
         DOCKER_REPO = 'baalavignesh21/baalavignesh-survey'
     }
 
@@ -39,9 +40,15 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Using the kubectl configuration already set up on the EC2 instance
-                    sh "kubectl apply -f deployment-definition.yaml"
-                    sh "kubectl rollout restart deployment/survey-deployment"
+                    withCredentials([file(credentialsId: KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
+                        // Debug information
+                        sh "echo 'Using kubeconfig from: $KUBECONFIG'"
+                        sh "kubectl --kubeconfig=$KUBECONFIG config view --minify"
+                        
+                        // Apply deployment
+                        sh "kubectl --kubeconfig=$KUBECONFIG apply -f deployment-definition.yaml"
+                        sh "kubectl --kubeconfig=$KUBECONFIG rollout restart deployment/survey-deployment"
+                    }
                 }
             }
         }
