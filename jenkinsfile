@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'  
-        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig' 
         DOCKER_REPO = 'baalavignesh21/baalavignesh-survey'
     }
 
@@ -40,6 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    // Using the kubeconfig from the default location
                     sh "kubectl apply -f deployment-definition.yaml"
                     sh "kubectl rollout restart deployment/survey-deployment"
                 }
