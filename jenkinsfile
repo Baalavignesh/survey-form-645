@@ -37,21 +37,19 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
-                        // Debug information
-                        sh "echo 'Using kubeconfig from: $KUBECONFIG'"
-                        sh "kubectl --kubeconfig=$KUBECONFIG config view --minify"
-                        
-                        // Apply deployment
-                        sh "kubectl --kubeconfig=$KUBECONFIG apply -f deployment-definition.yaml"
-                        sh "kubectl --kubeconfig=$KUBECONFIG rollout restart deployment/survey-deployment"
-                    }
+    stage('Deploy to Kubernetes') {
+        steps {
+            script {
+                withCredentials([file(credentialsId: 'GCP_SERVICE_ACCOUNT_KEY', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    sh "export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
+                    sh "gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS"
+                    sh "gcloud container clusters get-credentials <your-cluster-name> --region <your-region>"
+                    sh "kubectl apply -f deployment-definition.yaml"
+                    sh "kubectl rollout restart deployment/survey-deployment"
                 }
             }
         }
+    }
     }
 
     post {
