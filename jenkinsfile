@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'  
+        KUBECONFIG_CREDENTIALS_ID = 'kubeconfig'
         DOCKER_REPO = 'baalavignesh21/baalavignesh-survey'
     }
 
@@ -36,21 +37,13 @@ pipeline {
             }
         }
 
-        stage('Get GKE Credentials') {
-            steps {
-                script {
-                    // Get credentials for the GKE cluster
-                    sh "gcloud container clusters get-credentials my-first-cluster-3 --zone us-east1-b --project endless-anagram-453318-q6"
-                }
-            }
-        }
-
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Using the kubeconfig from the default location
-                    sh "kubectl apply -f deployment-definition.yaml"
-                    sh "kubectl rollout restart deployment/survey-deployment"
+                    withCredentials([file(credentialsId: KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
+                        sh "kubectl --kubeconfig=$KUBECONFIG apply -f deployment-definition.yaml"
+                        sh "kubectl --kubeconfig=$KUBECONFIG rollout restart deployment/survey-deployment"
+                    }
                 }
             }
         }
