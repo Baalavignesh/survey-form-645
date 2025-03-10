@@ -17,13 +17,13 @@ pipeline {
             }
         }
 
-        // stage('Build Docker Image') {
-        //     steps {
-        //         script {
-        //             docker.build("${DOCKER_REPO}:${env.BUILD_ID}")
-        //         }
-        //     }
-        // }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t baalavignesh21/baalavignesh-survey:${env.BUILD_ID} .'
+                }
+            }
+        }
 
         // stage('Push Docker Image') {
         //     steps {
