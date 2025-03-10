@@ -20,22 +20,21 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t baalavignesh21/baalavignesh-survey:${env.BUILD_ID} .'
+                    sh "docker build -t baalavignesh21/baalavignesh-survey:${BUILD_ID} ."
                 }
             }
         }
 
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-        //                 sh '/usr/local/bin/docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD https://index.docker.io/v1/'
-        //                 sh "/usr/local/bin/docker push ${DOCKER_REPO}:${env.BUILD_ID}"
-        //             }
-        //         }
-        //     }
-        // }
-
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh '/usr/local/bin/docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD https://index.docker.io/v1/'
+                        sh "/usr/local/bin/docker push ${DOCKER_REPO}:${BUILD_ID}"
+                    }
+                }
+            }
+        }
 
         // stage('Deploy to Kubernetes') {
         //     steps {
@@ -51,10 +50,10 @@ pipeline {
         // }
     }
 
-    // post {
-    //     always {
-    //         // Clean up after pipeline runs
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            // Clean up after pipeline runs
+            cleanWs()
+        }
+    }
 }
