@@ -43,14 +43,24 @@ pipeline {
                     withCredentials([file(credentialsId: 'GCP_SERVICE_ACCOUNT_KEY', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         script {
                             sh """
-                                export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
+                                echo 'Using Google service account credentials from: $GOOGLE_APPLICATION_CREDENTIALS'
+
+                                # Authenticate with Google Cloud
                                 gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+
+                                # Set the GCP project explicitly
+                                gcloud config set project endless-anagram-453318-q6
+
+                                # Configure kubectl to use GKE credentials
                                 gcloud container clusters get-credentials my-first-cluster-3 --region us-east1-b
+
+                                # Apply Kubernetes deployment
                                 kubectl apply -f deployment-definition.yaml
                                 kubectl rollout restart deployment/survey-deployment
                             """
                         }
                     }
+
                 }
             }
         }
